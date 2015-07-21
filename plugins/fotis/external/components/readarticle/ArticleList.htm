@@ -1,0 +1,39 @@
+{% set articles = __SELF__.articles %}
+<ul style="padding:0">
+{% for article in articles %}
+   <li style="cursor:pointer;box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);list-style-type: none;margin-top: 10px;" class="itemtodelete" id="{{ article.id }}">
+    <a onclick="openlink('{{ article.id }}', '{{ article.article_url }}');" href="{{ article.article_url }}" target="_blank">
+		<header style="height:300px" class="card__thumb">
+			<img style="width:100%;position: relative;top: 50%;transform: translateY(-50%);z-index: 10;" src="{{ article.article_image }}">
+			<img style="z-index: 1;width: 100%;transform: translateY(-42%);" src="http://www.agroo.gr/themes/agroo/assets/images/brokenminify.png">
+		</header> 
+	
+		<div style="background-color:#fff" class="card__body">
+		    <div class="card__category" style="z-index:100;"><a href="#"> {% if article.user.name %} {{ article.user.name }} {% else %} {{ article.user.email }} {% endif %}</a></div>
+			<div class="card__title">{{ article.article_title|raw }}
+			</div>
+			<div style="float:left;color: #737373;" class="card__date__day"><i class="fa fa-clock-o"></i> {{ article.created_at|date('H', "Europe/Athens") }}:{{ article.created_at|date('i') }}, {% if article.created_at|date('D', "Europe/Athens") == 'Mon' %} Δευτέρα {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Tue' %} Τρίτη {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Wed' %} Τετάρτη {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Thu' %} Πέμπτη {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Fri' %} Παρασκευή {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Sat' %} Σάββατο {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Sun' %} Κυριακή {% endif %} {{ article.created_at|date('m', "Europe/Athens")}} {{ article.created_at|date('Y') }}</div>
+			{% if article.user.id == current_user_id %}
+			<span class="overlayImage" id="delete"	>
+				<i onclick="deletepost('{{ current_user_id }}', '{{ article.id }}');" class="fa fa-trash-o {{ article.id }}"> Delete</i>
+			</span>
+			{% endif %}
+			{% if article.user.id == current_user_id %}<div style="float:right;color: #737373;" class="card__date__day">{% if article.total_views != 0 %} <i class="fa fa-check"></i>{% endif %} Το {% if article.total_views == 1 %} είδε {{ article.total_views }} άτομο {% else %} είδαν {{ article.total_views }} άτομα {% endif %}</div>{% endif %}
+			<div class="row"></div>
+		</div>
+    </a>
+	</li>
+{% endfor %}
+</ul>
+
+
+<style type="text/css">
+#delete{
+	right: 45%;
+	display:none;
+}
+.itemtodelete:hover #delete {
+    position: absolute;
+    display:block;
+}
+</style>
