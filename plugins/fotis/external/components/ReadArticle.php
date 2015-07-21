@@ -145,6 +145,11 @@ class ReadArticle extends ComponentBase
             if ( ($title == $article->article_title) && ($image == $article->article_image) ) {
                 $bool = 0;
             }
+            $url = strtok($url, '?');
+            $url = strtok($url, '#');
+            if ( ( preg_replace( '/([^:])(\/{2,})/', '$1/', trim( trim( $url, '/' ) ) ) == $article->article_url) && ($title == $article->article_title) ) {
+                $bool = 0;
+            }
         }
         return $bool;
     }
