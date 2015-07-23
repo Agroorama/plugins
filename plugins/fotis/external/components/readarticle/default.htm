@@ -1,4 +1,4 @@
-<div style="background-color:#E9EAED;padding-top: 2%;" class="container" >
+<div style="background-color:#E9EAED;" class="container" >
     {% put scripts %}
     <script>
     var change = 0;
@@ -214,7 +214,7 @@
 
     function deletepost(userid, postid){
 
-        $('.' + postid).html(" Deleting");
+        $('.' + postid).html(" <img src='http://www.agroo.gr/themes/agroo/assets/images/articlespreloader.gif'>");
         $.request('onDeletePost',
         {
             data: {
@@ -238,7 +238,7 @@
 
 <div style="margin-top:50px" class="row">   
     <div class="col-md-6 col-md-offset-3 col-xs-12 text-center">
-            <div id="save" style="background-color:#fff;margin-bottom: 20px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.1),0 2px 10px 0 rgba(0,0,0,.05);" class="timeline-panel">
+            <div id="save" style="box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 5px 0px, rgba(0, 0, 0, 0.0470588) 0px 2px 10px 0px;max-width: 600px;margin: 20px auto 20px;background-color: rgb(255, 255, 255);" class="timeline-panel">
             <div id="image" class="timeline-heading">
                 <img id="width" class="img-responsive"  src="">
             </div>
@@ -249,12 +249,9 @@
     </div>
 </div> 
 
-<div style="  padding-right: 55px;padding-left: 55px;" class="row">
+<div style="padding-right: 55px;padding-left: 55px;" class="row">
    
-    <div style="  padding: 10px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1),0 2px 10px 0 rgba(0,0,0,.05);" class="col-md-6 col-xs-12 col-md-offset-3 text-center">
+    <div style="padding: 10px;background-color: #fff;border-radius: 4px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.1),0 2px 10px 0 rgba(0,0,0,.05);" class="col-md-6 col-xs-12 col-md-offset-3 text-center">
     <div class="form-group">
         <div style="display:none;background-color:#81bc3f" id="savedpost">
             <div class="alert alert-success">
@@ -314,7 +311,7 @@
 <style type="text/css">
 #imagechooser img {
     height: auto;
-    max-height: 100px;
+    max-height: 300px;
     /* width: auto; */
     border-radius: 15px;
     /* padding: 5px; */
