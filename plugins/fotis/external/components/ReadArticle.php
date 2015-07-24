@@ -86,7 +86,7 @@ class ReadArticle extends ComponentBase
         if (isset(Auth::getUser()->email)) {
 
         }else{
-            $data['message'] = 'login';
+            $data['message'] = 'Σύνδεση';
             return $data;
         }
         if (post('image') && post('title') && post('articleurl')) {
@@ -94,7 +94,7 @@ class ReadArticle extends ComponentBase
             $data['title'] = $title = trim(post('title'));
             $data['url'] = $url = preg_replace( '/([^:])(\/{2,})/', '$1/', trim( trim( post('articleurl'), '/' ) ) );
         }else{
-            $data['message'] = 'Error';
+            $data['message'] = 'Πρόβλημα στο σύνδεσμο';
             return $data;
         }
     

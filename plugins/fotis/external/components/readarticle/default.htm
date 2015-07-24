@@ -157,7 +157,13 @@
                     console.log(data.result);
                     $('#savebutton').text(data.message);
                     $('#savebutton').css('background-color', '#DD4B39');
+					//login modal
+					if(data.message == 'Σύνδεση'){
+						$("#notUser").modal('show');
+						document.getElementById("fieldset").value='';
+					}
                 }else{
+					
                     $("#savedpost").show().delay(2000).fadeOut();
                     $('#save').css('display', 'none');
                     document.getElementById("fieldset").value='';
@@ -176,10 +182,10 @@
         document.getElementById("fieldset").value='';
         document.getElementById("savebutton").setAttribute("disabled","disabled");
         $('#clearbutton').css('display', 'none');
-        $('html,body').scrollTop(0);
+       // $('html,body').scrollTop(0);
         $('#savebutton').html('Κοινοποίηση');
         $('#savebutton').css('background-color', '#81bc3f');
-        $('#title').html('');
+        $('#title').text('');
         $('#image img').attr('src', '');
         $('#save').css('display', 'none');
     }
@@ -238,7 +244,7 @@
 
 <div style="margin-top:50px" class="row">   
     <div class="col-md-6 col-md-offset-3 col-xs-12 text-center">
-            <div id="save" style="box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 5px 0px, rgba(0, 0, 0, 0.0470588) 0px 2px 10px 0px;max-width: 600px;margin: 20px auto 20px;background-color: rgb(255, 255, 255);" class="timeline-panel">
+            <div id="save" style="display:none;box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 5px 0px, rgba(0, 0, 0, 0.0470588) 0px 2px 10px 0px;max-width: 600px;margin: 20px auto 20px;background-color: rgb(255, 255, 255);" class="timeline-panel">
             <div id="image" class="timeline-heading">
                 <img id="width" class="img-responsive"  src="">
             </div>
@@ -249,7 +255,7 @@
     </div>
 </div> 
 
-<div style="padding-right: 55px;padding-left: 55px;" class="row">
+<div style="padding-right: 43px;padding-left: 43px;margin-top:15px" class="row">
    
     <div style="padding: 10px;background-color: #fff;border-radius: 4px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.1),0 2px 10px 0 rgba(0,0,0,.05);" class="col-md-6 col-xs-12 col-md-offset-3 text-center">
     <div class="form-group">
@@ -272,7 +278,7 @@
 </div>
 <a href="#" class="scrollToTop"><i class="fa fa-arrow-up fa-2x"></i></a>
 
-<div class="col-md-12">
+<div style="padding:0" class="col-md-12">
     <div class="col-xs-12 col-md-6 col-md-offset-3 text-center" id="wallmessagesforupdate">
         <div class="qa-message-list" id="wallmessages">
             {% partial __SELF__~'::ArticleList' %}
