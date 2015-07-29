@@ -1,0 +1,32 @@
+{% set store_list = __SELF__.stores %}
+
+    {% for store in store_list|reverse %}
+
+    <div class="map-location" data-jmapping="{id: {{ store.id  }}, point: {lng: {{ store.long }}, lat: {{ store.lat }}}, category: 'store'}">
+
+    <!-- MAP INFO BOX -->
+
+    <div class="info-box">
+     
+    <a href="http://www.agroo.gr/store/{{ store.slug }}" target="_blank">  
+        <img src="{{ store.cover_image.thumb(200, 200) }}" title="{{ store.cover_image.title }}" alt="{{ store.cover_image.description }}">
+     <p style="width:200px;font-size: 18px;">{{ store.name }}</p></a><br>
+     <p style="color:#222"><i class="fa fa-shopping-cart fa-1x"></i> Προϊόντα: {{ store.products_number }}</p> 
+    </div>
+     </div>
+    <!-- END INFO BOX -->
+
+    <div style="margin-bottom:25px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);" class="row panel">
+            
+            
+                <div style="padding-left:0;padding-right:0" class="col-md-8">
+               <a href="/store/{{ store.slug }}" class="map-link">
+                   <img src="{{ store.cover_image.thumb(1000, 300) }}" title="{{ store.cover_image.title }}" alt="{{ store.cover_image.description }}" class="img-responsive"></a>
+                </div>
+            <div class="col-md-4">
+                <a href="/store/{{ store.slug }}"><h2 style="color:#222">{{ store.name }}</h2></a>
+                    <p style="color:#222"><i class="fa fa-shopping-cart fa-1x"></i> Προϊόντα: {{ store.products_number }}</p>
+                </div>
+    </div>
+       
+    {% endfor %}

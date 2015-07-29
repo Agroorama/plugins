@@ -1,0 +1,61 @@
+{% set articles = __SELF__.articles %}
+<ul style="padding:0">
+{% for article in articles %}
+   <li style="cursor:pointer;box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);list-style-type: none;margin-top: 10px;" class="itemtodelete" id="{{ article.id }}">
+    <a onclick="openlink('{{ article.id }}', '{{ article.article_url }}');" href="{{ article.article_url }}" target="_blank">
+		<header style="max-height:300px" class="card__thumb">
+			<img style="width:100%;position: relative;top: 50%;z-index: 10;" src="{{ article.article_image }}">
+			<!--<img style="z-index: 1;width: 100%;transform: translateY(-42%);" src="http://www.agroo.gr/themes/agroo/assets/images/brokenminify.png">-->
+		</header> 
+	</a>
+		<div style="background-color:#fff" class="card__body">
+		    <div class="card__category" style="z-index:100;">
+				<a href="#"><i class="fa fa-link"></i> {% if article.user.name %} {{ article.user.name }} {% else %} {% set email = article.user.email|split('@') %} 
+					{% if email[1] == 'gmail.com' or email[1] == 'hotmail.com' or email[1] == 'yahoo.gr' or email[1] == 'yahoo.com' or email[1] == 'otenet.gr' or email[1] == 'live.com' or email[1] == 'windowslive.com' or email[1] == 'hotmail.gr' or email[1] == 'outlook.com' or email[1] == 'in.gr' or email[1] == 'cosmote.gr' or email[1] == 'hol.gr' or email[1] == 'me.com' %}
+					
+							{{ email[0] }}
+					 
+					 {% elseif email[0] == 'info' or email[0] == 'support' or email[0] == 'webmaster' or email[0] == 'admin' or email[0] == 'sales' or email[0] == 'marketing' or email[0] == 'editor' or email[0] == 'contact' %}
+					
+							{{ email[1] }}
+					
+					{% else %}
+					
+							{{ email[0] }}
+					
+					{% endif %}
+ 			{% endif %}</a></div>
+			
+		
+			<div class="card__title"><a onclick="openlink('{{ article.id }}', '{{ article.article_url }}');" href="{{ article.article_url }}" target="_blank">	{{ article.article_title|raw }}</a><br>
+					<span style="font-size:12px;color: #999;"> {% set posturl = article.article_url|slice('7') %}{% set p = posturl|split('/') %}<a onclick="openlink('{{ article.id }}', '{{ article.article_url }}');" href="http://{{ p[0] }}" target="_blank"><i style="font-size:10px" class="fa fa-globe"></i>   {{ p[0] }} </a></span>
+					
+				</div>
+			
+			<div style="float:left;color: #737373;" class="card__date__day"><i class="fa fa-clock-o"></i> {{ article.created_at|date('H', "Europe/Athens") }}:{{ article.created_at|date('i') }}, {% if article.created_at|date('D', "Europe/Athens") == 'Mon' %} Δευτέρα {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Tue' %} Τρίτη {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Wed' %} Τετάρτη {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Thu' %} Πέμπτη {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Fri' %} Παρασκευή {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Sat' %} Σάββατο {% endif %}{% if article.created_at|date('D', "Europe/Athens") == 'Sun' %} Κυριακή {% endif %} {{ article.created_at|date('m', "Europe/Athens")}}/{{ article.created_at|date('Y') }}</div>
+			
+			{% if article.user.id == current_user_id %}
+			<span style="font-size: 10px;" class="overlayImage" id="delete"	>
+				<i onclick="deletepost('{{ current_user_id }}', '{{ article.id }}');" class="fa fa-trash-o {{ article.id }}"> Διαγραφή</i>
+			</span>
+			{% endif %}
+			
+			{% if article.user.id == current_user_id %}<div style="float:right;color: #737373;" class="card__date__day">{% if article.total_views != 0 %} <i class="fa fa-check"></i>{% endif %} Το {% if article.total_views == 1 %} είδε {{ article.total_views }} άτομο {% else %} είδαν {{ article.total_views }} άτομα {% endif %}</div>{% endif %}
+			<div class="row"></div>
+		</div>
+    
+	</li>
+{% endfor %}
+</ul>
+
+
+<style type="text/css">
+#delete{
+	right: 45%;
+	display:none;
+}
+.itemtodelete:hover #delete {
+    position: absolute;
+    display:block;
+}
+</style>
