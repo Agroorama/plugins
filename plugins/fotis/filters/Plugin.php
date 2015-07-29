@@ -1,9 +1,9 @@
-<?php namespace Fotis\External;
+<?php namespace Fotis\Filters;
 
 use System\Classes\PluginBase;
 
 /**
- * External Plugin Information File
+ * filters Plugin Information File
  */
 class Plugin extends PluginBase
 {
@@ -16,8 +16,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'External',
-            'description' => 'No description provided yet...',
+            'name'        => 'filters',
+            'description' => 'Filter Products',
             'author'      => 'fotis',
             'icon'        => 'icon-leaf'
         ];
@@ -26,7 +26,8 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'fotis\external\components\ReadArticle' => 'ReadArticle'
+            'fotis\filters\components\ProductFilters' => 'ProductFilters',
+            'fotis\filters\components\StoreFilters' => 'StoreFilters'
         ];
     }
 }

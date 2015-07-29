@@ -1,0 +1,133 @@
+{{ count }}
+{% set products = __SELF__.products %}
+{% for product in products|reverse if product.is_published == 1 %}
+
+<div class="map-location" data-jmapping="{id: {{ product.id  }}, point: {lng: {{ product.customfields[19].value }}, lat: {{ product.customfields[18].value }}}, category: 'product'}">
+
+<!-- MAP INFO BOX -->
+
+<div class="info-box">
+ 
+ <a href="http://www.agroo.gr/product/item/{{ product.slug }}" target="_blank"> 
+ 
+ <img src="{{ product.featured_images[1].thumb(150, 150) }}" alt="{{ product.title }}">
+
+ <p style="width:150px">{{ product.title }} <br> <span style="font-weight:bold">{{ product.discount_price }}€</span></p></a>
+ 
+ <a href="/store/{{  product.customfields[23].value }}" target="_blank"><i class="fa fa-building-o"></i> {{ product.customfields[14].value }}</p></a>
+ 
+ 
+</div>
+
+<!-- END INFO BOX -->
+
+ <div  itemscope itemtype="http://schema.org/Product"   class="col-xs-6 col-md-6 col-lg-6 map-link">
+                          
+                            <div class="col-item"  data-mh="my-group" style="margin-bottom:25px">
+                           <a  style="color:#333" class="map-link" href="#"> 
+							      <div class="photo">
+                                         <!-- wrapper div -->  
+                                <div class='wrapper'>  
+                                    <!-- image -->  
+                                               <img itemprop="image" src="{{ product.featured_images[1].thumb(300, 300) }}" alt="{{ product.title }}">  
+                                    <!-- description div -->  
+                                    <div class='description'>  
+                                        <!-- description content -->  
+                                        <p class='description_content'>{{ product.discount_price }} € </p>  
+                                        <!-- end description content -->  
+                                    </div>  
+                                    <!-- end description div -->  
+                                </div>  
+                                <!-- end wrapper div -->  
+                                </div>
+                                
+                                   {% if product.customfields[27].value == 'deal' %}
+                                   
+                                <div class="info">
+                                        <div style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);padding:5px;min-height:46px" class="price col-md-12 col-sm-12  text-center">
+                                            <h5 style="margin-top:3%;font-size:14px;font-weight:bold">
+                                                {{ product.title }}</h5>
+                                        
+                                        </div>
+                                        <div class="price col-md-12 col-sm-12 col-xs-12 ">
+                                        <div style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" class="row clearfix">
+			
+                    				<div class="col-md-6  col-sm-6 column alert-danger text-center ">
+                    				    
+                    				    <h2><span style="text-decoration:line-through;font: normal 20px/1.5em 'Open Sans', arial, sans-serif;">{{ product.price }}€</span></h2>
+                    				
+                    				</div>
+                    				
+                    				<div class="col-md-6  col-sm-6 column alert-success text-center" >
+                    				    
+                    				    <h2><span style="color:#81BC3F;font: normal 20px/1.5em 'Open Sans', arial, sans-serif;"> {{ product.discount_price }}€ </span> </h2>
+                    				
+                    				</div>
+                    			</div>
+                                                                               
+                                        
+                                        </div>
+                                        
+                                            <div  class="clearfix"></div>
+                                    <div style="margin-top: 10px;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" class="col-md-12 col-sm-12 alert-info text-center">
+                    				    
+                    				    <h5 style="font-weight:bold">{% set discount = (product.price - product.discount_price)/product.price  %}{% set dis = discount*100 %}
+                              Έκπτωση {{ dis|round(1, 'ceil') }}%</h5>
+                    				
+                    				</div>
+                    		
+                                 <div class="clearfix"></div>
+                                </div>
+                                    
+                                    {% else %}
+                                
+                                <div class="info">
+                                  
+                                    
+                                    <div class="price col-md-12 col-sm-12 col-xs-12 ">
+                                   
+                                        <div style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" class="row clearfix">
+			
+                    				        <div class="col-md-12 col-sm-12 column text-center" >
+                    				    
+                    				            <h2 style="margin-top:0px;font-size:18px">{{ product.title }}</h2>
+                    				
+                    				        </div>
+                    				
+                    			        </div>
+                    			             <div style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);margin-top:5px;height: 25px;" class="row clearfix">
+                    			                     <div class="col-md-6 col-sm-6 col-xs-6" style="line-height: 2;text-align:center;  font-size: 11px;">
+                    		                        <i class="fa fa-map-marker"></i> {{ product.customfields[7].value }}
+                    		                        </div>
+                    		                         <div class="col-md-6 col-sm-6 col-xs-6" style="line-height: 2;text-align:center;font-size: 11px;" >
+                    		                        <a href="/store/{{  product.customfields[23].value }}" target="_blank"><i class="fa fa-building-o"></i> {{ product.customfields[14].value }}</p></a>
+                    		                        </div>
+                    		                </div>
+                    		                    <div style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);margin-top:5px" class="row clearfix">
+                    			                     <div class="col-md-12 col-sm-12 col-xs-12" style="line-height: 2;text-align:center;padding:10px">
+                    		                        <h5 style="color:#666666;text-align:center;text-rendering: optimizelegibility;font-weight:bold;text-align:center;font-weight: bold;"> Social Index <a href="/social-index" target="_blank" style="font-size:14px;color:#444;" class="fa fa-info-circle green-tooltip" data-toggle="tooltip" title="Δες πως υπολογίζεται το SI"></a>: 
+                                                               <span style="font-size:20px">{% if product.index_rating %}{{ product.index_rating }}{% else %}0{% endif %}</span> / 10
+                                                          </h5>
+                    		                        </div>
+                    		                         
+                    		                </div>
+                                                                              
+                                        
+                                    </div>
+                                        
+                                            <div  class="clearfix"></div>
+                                               
+                                 <div class="clearfix"></div>
+                                 
+                                </div>
+                                        
+                                    {% endif %}
+                                    
+                                    
+                                    
+                                </a>
+                            </div>
+                        </div>
+  
+  </div>
+{% endfor %}

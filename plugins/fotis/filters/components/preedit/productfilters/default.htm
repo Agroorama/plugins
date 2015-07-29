@@ -1,0 +1,46 @@
+
+
+{% if scope == 'stores' %}
+
+
+    <div style="min-height:100vh" class="container">
+
+			<div style="padding-left:0" class="col-md-12">
+
+
+			<div style="padding:0;overflow-y: auto;" class="col-md-7" >
+			{% partial __SELF__~'::StoreFilters' %}
+			<div id="map-side-bar">
+				{% partial __SELF__~'::StoreList' %}
+			</div>
+			
+			<div style="padding-left:0;padding-right:0; position:fixed;top:0;right:0" class="col-md-5">
+				<div class="map" id="map"></div>
+			</div>
+
+{% elseif scope == 'articles' %}
+
+    {% partial __SELF__~'::ArticleFilters' %}
+    {% partial __SELF__~'::ArticleList' %}
+
+{% else %}
+
+   
+    <div style="min-height:100vh" class="container">
+
+    <div style="padding-left:0" class="col-md-12">
+
+
+    <div style="padding:0;height: 95vh;overflow-y: auto;" class="col-md-7" id="scrollable" >
+			 {% partial __SELF__~'::ProductFilters' %}
+    <div id="map-side-bar">
+	
+		 
+        {% partial __SELF__~'::ProductList' %}
+    </div>
+
+    <div style="padding-left:0;padding-right:0; position:fixed;top:0;right:0" class="col-md-5">
+        <div class="map" id="map"></div>
+    </div>
+
+{% endif %}

@@ -8,7 +8,7 @@ use DB;
 use DOMDocument;
 use DOMXPath;
 require_once('url_to_absolute.php');
-error_reporting(0);
+// error_reporting(0);
 
 class ReadArticle extends ComponentBase
 {
@@ -86,15 +86,15 @@ class ReadArticle extends ComponentBase
         if (isset(Auth::getUser()->email)) {
 
         }else{
-            $data['message'] = 'login';
+            $data['message'] = 'Σύνδεση';
             return $data;
         }
         if (post('image') && post('title') && post('articleurl')) {
             $data['image']  = $image = trim(post('image'));
-            $data['title'] = $title = trim(post('title'));
+            $data['posttitle'] = $title = trim(post('title'));
             $data['url'] = $url = preg_replace( '/([^:])(\/{2,})/', '$1/', trim( trim( post('articleurl'), '/' ) ) );
         }else{
-            $data['message'] = 'Error';
+            $data['message'] = 'Πρόβλημα στο σύνδεσμο';
             return $data;
         }
     
@@ -254,6 +254,16 @@ class ReadArticle extends ComponentBase
 
     function GetImage($document, $url){
 
+        $meta_og_img = '';
+        foreach($document->getElementsByTagName('meta') as $meta) {
+            //If the property attribute of the meta tag is og:image
+            if($meta->getAttribute('property')=='og:image'){ 
+                //Assign the value from content attribute to $meta_og_img
+                $meta_og_img = $meta->getAttribute('content');
+                // trigger_error($meta_og_img);
+                $images[$meta_og_img] = array('src' => $meta_og_img);
+            }
+        }
         foreach($document->getElementsByTagName('img') as $img){
             $image = array
             (
@@ -261,7 +271,7 @@ class ReadArticle extends ComponentBase
             );
             if( ! $image['src'])
                 continue;
-            if ( !$this->endsWith($image['src'], "gif") )
+            if ( !$this->endsWith($image['src'], "gif") && $meta_og_img != $image)
                 $images[$image['src']] = $image;
         }
         if (isset($images)) {
@@ -273,6 +283,15 @@ class ReadArticle extends ComponentBase
 
     public function GetTitle($document, $url){        
 
+        foreach($document->getElementsByTagName('meta') as $meta) {
+            //If the property attribute of the meta tag is og:image
+            if($meta->getAttribute('property')=='og:title'){ 
+                //Assign the value from content attribute to $meta_og_img
+                $title = $meta->getAttribute('content');
+                // trigger_error($meta_og_img);
+                return trim($title);
+            }
+        }
         $list = $document->getElementsByTagName("title");
         if ($list->length > 0) {
             $title = $list->item(0)->textContent;

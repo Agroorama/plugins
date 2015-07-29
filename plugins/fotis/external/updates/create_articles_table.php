@@ -16,6 +16,7 @@ class CreateArticlesTable extends Migration
                 {
                     $table->engine = 'InnoDB';
                     $table->increments('id');
+                    $table->integer('User_id');
                     $table->text('user_email')->nullable();
                     $table->text('article_url')->nullable();
                     $table->text('article_image')->nullable();
@@ -32,17 +33,6 @@ class CreateArticlesTable extends Migration
             Schema::table('fotis_external_articles', function($table)
             {
                 $table->text('user_name')->nullable();
-            });
-        }
-
-        if (Schema::hasColumn('fotis_external_articles', 'user_id'))
-        {
-            
-        }else{
-
-            Schema::table('fotis_external_articles', function($table)
-            {
-                $table->text('user_id')->nullable();
             });
         }
 
