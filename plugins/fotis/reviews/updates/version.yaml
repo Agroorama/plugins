@@ -1,0 +1,7 @@
+1.0.1: First version of reviews
+1.0.2:
+    - Create the rates table
+    - create_rates_table.php
+1.0.3:
+    - Create Other Table
+    - create_prod_rates_table.php

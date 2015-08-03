@@ -1,0 +1,160 @@
+	           
+	       	<div class="row clearfix">
+		<div class="col-md-12 column" >
+			<div class="row clearfix">
+				<div class="col-md-6 column">
+					<div class="row clearfix">
+						<div class="col-md-12 column" style="padding-right: 0;">
+						    	<div style="  cursor: pointer;outline: 0;text-align: center;font-weight: 700;background-color: #fff;border-radius: 2px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.2);" class="col-md-12 column">
+		    
+		      <div style="background:#fff;padding:0px" class="col-md-12">
+	               
+    {% if user %}
+                    <form>
+                        <input id="input-star" type="number" class="rating" min="0" max="5" step="1" data-size="xs"
+                        data-symbol="&#xe006;" data-default-caption="{rating}" data-star-captions="{}" value="{{ NewRating|round(1, 'ceil') }}">
+        <!-- &#xe103; -->            </form>
+<script>
+	var product_id = '{{ productid }}';
+	var usermail = '{{ user.email }}';
+	var shares = '{{ shares }}';
+	var likes = '{{ likes }}';
+	var totalviews = '{{ totalviews }}';
+	var wishlist = '{{ wishlist }}';
+	var buy = '{{ buy }}';
+
+	$("#input-star").rating({
+		'showClear':false,
+		'starCaptionClasses': function(val) {
+		    if (val == 0) {
+		    }
+		    else if (val < 2) {
+		        return 'label label-danger';
+		    }
+		    else if (val < 4) {
+		        return 'label label-info';
+		    } 
+		    else {
+		        return 'label label-success';
+		    }
+		}
+
+
+	});
+	$('#input-star').on('rating.change', function(event, value, caption) {
+
+	    $('form').request('onSaveRating', 
+	    	{data: {
+	    		product_id:product_id,
+	    		rating: value,
+	    		mail:usermail,
+	    		shares:shares,
+	    		likes:likes,
+	    		totalviews:totalviews,
+	    		wishlist:wishlist,
+	    		buy:buy
+	    		}
+	    	}
+		).done(function(data) {
+		
+			console.log(data);
+				$('#input-star').rating('update', data.NewRating);
+				if (data.FacebookShares){
+					$('#sharesnumber').html(data.FacebookShares + " Κοινοποιήσεις");
+				}else {
+						$('#sharesnumber').html("0 Κοινοποιήσεις");
+				}
+				
+				if(data.moRating == 0){
+					$('#mytotalrating').html('Not rated yet');
+				}else{
+					$('#mytotalrating').html(data.moRating + " / <span style='font-size:14px'>10</span> ");
+				}
+			});
+		
+	});
+
+	</script>
+                
+                
+                    {% else %}
+                
+                <div data-toggle="modal" data-target="#notUser" >
+					
+                    <form>
+                        <input id="input-star" type="number" class="rating" min="0" max="5" step="1" data-size="xs"
+                        data-symbol="&#xe006;" data-default-caption="{rating}" data-star-captions="{}" value="{{ NewRating|round(1, 'ceil') }}">
+                    </form>
+                 
+                 </div>
+                    
+<script type="text/javascript">
+		$("#input-star").rating({
+		'showClear':false,
+		'readonly':true
+	});
+</script>
+                    {% endif %}
+                	               
+	           </div>
+		    
+		    
+		</div>
+						    
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-md-12 column" style="cursor:default;padding-right: 0;">
+						    	<div style="padding:5px;margin:5px 0;cursor: pointer;outline: 0;text-align: center;color:#81bc3f;font-weight: 700;background-color: #fff;border-radius: 2px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.2);" class="col-md-6"  >
+	                           {{ totalviews }} προβολές
+	                   </div>
+<div  style="padding:5px;margin:5px 0;cursor: pointer;outline: 0;text-align: center;color:#81bc3f;font-weight: 700;background-color: #fff;border-radius: 2px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.2);" class="col-md-6" id="sharesnumber">
+	                           {{ shares }} Κοινοποιήσεις
+	                       </div>
+						    
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-md-12 column" style="  padding-right: 0;">
+						 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.agroo.gr/product/item/{{ product.slug }}">
+	     <div style="padding:5px;cursor: pointer;outline: 0;text-align: center;color:#81bc3f;font-weight: 700;background-color: #fff;border-radius: 2px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.2);"  class="col-md-12">
+	                           <i class="fa fa-facebook-square"></i> Κοινοποίησε το        
+	                       </div></a>
+	                       </div>
+					</div>
+				</div>
+				<div class="col-md-6 column">
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+						    
+						          <h5 style="color:#666666;text-align:center;text-rendering: optimizelegibility;font-weight:bold;text-align:center;text-align: center;font-weight: bold;"> Social Index <a href="/social-index" target="_blank" style="font-size:14px;color:#444;" class="fa fa-info-circle green-tooltip" data-toggle="tooltip" title="Δες πως υπολογίζεται το SI"></a></h5>
+          
+	                            <h1 style="color:#666666;text-align:center;text-rendering: optimizelegibility;" id="mytotalrating">{{ mytotalrating|round(2, 'ceil') }} / <span style="font-size:14px">10</span><h1> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<style type="text/css">
+	.green-tooltip + .tooltip > .tooltip-inner {background-color: #81bc3f;}
+	.green-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:#81bc3F; 
+	box-shadow: 10px 10px 5px #888888;}
+</style>
+	<!-- {
+    0.5: 'label label-danger',
+    1: 'label label-danger',
+    1.5: 'label label-warning',
+    2: 'label label-warning',
+    2.5: 'label label-info',
+    3: 'label label-info',
+    3.5: 'label label-primary',
+    4: 'label label-primary',
+    4.5: 'label label-success',
+    5: 'label label-success'
+} -->

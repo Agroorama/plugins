@@ -1,0 +1,59 @@
+{% if user %}
+    <i id="bookmark" onclick="addtowishlist(
+    '{{ user.email }}',
+    '{{ product.id }}',
+    '{{ product.title }}',
+    '{{ product.slug }}',
+    '{{ product.featured_images[1].thumb(300, 300) }}'
+    );"
+    class="fa fa-2x fa-bookmark"></i>
+{% else %}
+    <i class="fa fa-2x fa-bookmark" data-toggle="modal" data-target="#notUser" ></i>
+{% endif %}
+<script type="text/javascript">
+$.notify.addStyle('green', {
+    html: "<div style='font-size:18px;border;radius:2px'><span data-notify-text/></div>",
+    classes: {
+        base: {
+          "white-space": "nowrap",
+          "background-color": "#81bc3F ",
+          "padding": "15px",
+          "color": "white"
+        },
+                superblue: {
+          "color": "81bc3F",
+          "background-color": "#81bc3F "
+        }
+    }
+});
+</script>
+<script type="text/javascript">
+    function addtowishlist(user_email, product_id, product_title, product_slug, product_image){
+        $('form').request('onSavetoWishlist', 
+            {data: {
+                user_email:user_email,
+                product_id:product_id,
+                product_title:product_title,
+                product_slug:product_slug,
+                product_image:product_image
+                }
+            }
+        ).done(function(data) {
+            console.log(data);
+            // $("#wishlistalert").toggle();
+            if (data.result == 'Already'){
+                
+                $.notify('Είναι ήδη στην Wishlist', {
+                  style: 'green'
+                });
+            }else if (data.result == 'Added'){
+                $.notify('Προστέθηκε στην Wishlist', {
+                  style: 'green'
+                });
+            }else{
+                $.notify("Error", "warn");
+            }
+            $( '#bookmark' ).css( "color" ,"#81bc3f");
+        });
+    }
+</script>
